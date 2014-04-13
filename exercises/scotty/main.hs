@@ -1,9 +1,16 @@
 {-# LANGUAGE OverloadedStrings #-}
-import Web.Scotty
+module Main where
 
-import Data.Monoid (mconcat)
+import Text.Hastache
+import Web.Scotty.Trans as S
+import Web.Scotty.Hastache
 
-main = scotty 3000 $ do
+main :: IO ()
+main = scottyH' 3000 $ do
+  setTemplatesDir "views"
+  -- ^ Setting up the director with templates
   get "/:word" $ do
     beam <- param "word"
-    html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]
+    setH "action" $ MuVariable (beam :: String)
+    -- ^ "action" will be binded to the contents of 'beam'
+    hastache "index.html"

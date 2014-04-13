@@ -48,7 +48,7 @@ cabal-version:       >=1.10
 
 executable Session1-Scotty
   -- .hs or .lhs file containing the Main module.
-  -- main-is:
+  main-is:           main.hs
 
   -- Modules included in this executable, other than Main.
   -- other-modules:
@@ -57,8 +57,9 @@ executable Session1-Scotty
   -- other-extensions:
 
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.6 && <4.7
-                       scotty == 0.7.1
+  build-depends:       base >=4.6 && <4.7,
+                       scotty == 0.7.1,
+                       hastache,
                        scotty-hastache
 
   -- Directories containing source files.
