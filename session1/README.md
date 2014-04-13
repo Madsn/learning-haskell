@@ -7,6 +7,7 @@
 - Checking types `:t`
 - Function composition `.`
 - Lazy evaluation
+- (Monads)
 
 ## Plan before next session
 - [ ] Implement a simple server app with Scotty
