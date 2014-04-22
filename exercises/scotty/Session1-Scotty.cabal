@@ -61,7 +61,15 @@ executable Session1-Scotty
                        scotty == 0.7.1,
                        hastache,
                        scotty-hastache,
-                       wai-middleware-static
+                       wai-middleware-static,
+                       persistent ==1.3.*,
+                       persistent-template ==1.3.*,
+                       persistent-sqlite ==1.3.*,
+                       text ==0.11.3.1,
+                       time ==1.4.0.1,
+                       esqueleto == 1.3.*,
+                       monad-logger == 0.3.*,
+                       transformers == 0.3.*
 
   -- Directories containing source files.
   -- hs-source-dirs:
