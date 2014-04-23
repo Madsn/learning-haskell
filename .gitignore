@@ -1,3 +1,4 @@
 *.o
 *.hi
 exercises/scotty/dist/
+exercises/scotty/.cabal-sandbox/

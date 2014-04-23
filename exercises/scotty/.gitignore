@@ -1,0 +1,5 @@
+.hsenv
+dist
+*.o
+*.hi
+
