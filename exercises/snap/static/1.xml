@@ -1,0 +1,24 @@
+<event id="someid">
+  <field id="t1id">
+    <text label="Text 1" placeholder="Write here"/>
+  </field>
+  <field id="t3id">
+    <text label="Text 2" placeholder="Write here"/>
+  </field>
+  <field id="nid">
+    <number label="Number" unit="meters"/>
+  </field>
+  <field id="bid">
+    <bool label="Bool"/>
+  </field>
+  <field id="t2id">
+    <text label="Text 3" placeholder="Write here"/>
+  </field>
+  <field id="sid">
+    <select label="Select">
+      <option id="1" text="o1"/>
+      <option id="2" text="o2"/>
+      <option id="3" text="o3"/>
+    </select>
+  </field>
+</event>
