@@ -60,9 +60,3 @@ navBar activePage = div ! class_ "navbar navbar-default navbar-static-top" $ div
              buildMenuLink "about" activePage
              buildMenuLink "contact" activePage
              buildMenuLink "login" activePage
-
-{-|
-             li $ a ! href "/about" $ "About"
-             li $ a ! href "/contact" $ "Contact"
-             li $ a ! href "/login" $ "Login"
--}
