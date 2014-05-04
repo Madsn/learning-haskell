@@ -42,21 +42,22 @@ layout t b = docTypeHtml $ do
 
 
 buildMenuLink :: String -> String -> Html
-buildMenuLink link activePage =
-  let liClass = if link == activePage
+buildMenuLink currentPage link =
+  let liClass = if link == currentPage
                 then "active"
                 else ""
   in li ! class_ liClass $ a ! href (toValue $ "/" <> link) $ toHtml link
 
+buildMenuLinks :: [String] -> String -> Html
+buildMenuLinks links currentPage = concatMap (buildMenuLink currentPage) links
+
 
 navBar :: String -> Html
-navBar activePage = div ! class_ "navbar navbar-default navbar-static-top" $ div ! class_ "container" $ do
+navBar currentPage = div ! class_ "navbar navbar-default navbar-static-top" $ div ! class_ "container" $ do
            div ! class_ "navbar-header" $ do
              button ! type_ "button"
                     ! class_ "navbar-toggle" ! dataAttribute "toggle" "collapse" ! dataAttribute "target" ".navbar-collapse" $ do
                a ! class_ "navbar-brand" ! href "#" $ "λ"
            div ! class_ "navbar-collapse collapse" $ ul ! class_ "nav navbar-nav" $ do
-             buildMenuLink "home" activePage
-             buildMenuLink "about" activePage
-             buildMenuLink "contact" activePage
-             buildMenuLink "login" activePage
+             buildMenuLinks ["home", "about", "contact", "login"] currentPage
+             --buildMenuLink "home" activePage
