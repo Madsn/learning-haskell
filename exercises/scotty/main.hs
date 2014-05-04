@@ -14,6 +14,6 @@ main = do
   scotty port $ do
          middleware $ staticPolicy (noDots >-> addBase "static/images") -- for favicon.ico
          middleware logStdoutDev
-         home >> login >> about >> contact
+         root >> home >> login >> about >> contact
 
 
