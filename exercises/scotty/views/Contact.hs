@@ -2,12 +2,8 @@
 
 module Views.Contact (contactView) where
 
-import           Client.CSS                  (layoutCss)
-import           Data.Monoid                 (mempty)
-import           Data.Text.Lazy              (toStrict)
 import           Prelude                     hiding (div, head, id)
-import           Text.Blaze.Html             (Html, toHtml)
-import           Text.Blaze.Html5            (Html, a, body, button,
+import           Text.Blaze.Html5            (Html, a, button,
                                               dataAttribute, div, docTypeHtml,
                                               form, h1, h2, head, input, li,
                                               link, meta, p, script, style,

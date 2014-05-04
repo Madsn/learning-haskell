@@ -2,11 +2,7 @@
 
 module Views.Login (loginView) where
 
-import           Client.CSS                  (layoutCss)
-import           Data.Monoid                 (mempty)
-import           Data.Text.Lazy              (toStrict)
 import           Prelude                     hiding (div, head, id)
-import           Text.Blaze.Html             (Html, toHtml)
 import           Text.Blaze.Html5            (Html, a, body, button,
                                               dataAttribute, div, docTypeHtml,
                                               form, h1, h2, head, input, li,
