@@ -6,6 +6,7 @@ import           Client.CSS                  (layoutCss)
 import           Data.Monoid                 (mempty)
 import           Data.Text.Lazy              (toStrict)
 import           Prelude                     hiding (div, head, id)
+import           Text.Blaze                  (toValue)
 import           Text.Blaze.Html             (Html, toHtml)
 import           Text.Blaze.Html5            (Html, a, body, button,
                                               dataAttribute, div, docTypeHtml,
@@ -18,6 +19,7 @@ import           Text.Blaze.Html5.Attributes (charset, class_, content, href,
 import           Views.Utils                 (blaze, pet)
 import           Web.Scotty                  (ActionM)
 import           Data.Char                   (toUpper)
+import           Data.Monoid
 
 layout :: Html -> Html -> Html
 layout t b = docTypeHtml $ do
@@ -39,9 +41,8 @@ layout t b = docTypeHtml $ do
              script ! src "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" $ mempty
 
 
-buildMenuLink :: Html -> Html
-buildMenuLink link = a ! href "/home" $ link
---buildMenuLink link = a ! href $ "/" ++ link $ link
+buildMenuLink :: String -> Html
+buildMenuLink link = a ! href (toValue $ "/" <> link) $ toHtml link
 
 
 navBar :: Html -> Html
