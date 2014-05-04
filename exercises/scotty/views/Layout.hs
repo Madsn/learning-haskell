@@ -17,7 +17,6 @@ import           Text.Blaze.Html5.Attributes (charset, class_, content, href,
                                               httpEquiv, id, media, name,
                                               placeholder, rel, src, type_)
 import           Views.Utils                 (blaze, pet)
-import           Web.Scotty                  (ActionM)
 import           Data.Monoid
 
 layout :: String -> Html -> Html
@@ -49,7 +48,7 @@ buildMenuLink currentPage link =
   in li ! class_ liClass $ a ! href (toValue $ "/" <> link) $ toHtml link
 
 buildMenuLinks :: [String] -> String -> Html
-buildMenuLinks links currentPage = concatMap (buildMenuLink currentPage) links
+buildMenuLinks links currentPage = mconcat $ map (buildMenuLink currentPage) links
 
 
 navBar :: String -> Html
