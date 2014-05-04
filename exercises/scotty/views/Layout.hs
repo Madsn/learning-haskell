@@ -40,12 +40,13 @@ layout t b = docTypeHtml $ do
              script ! src "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" $ mempty
 
 
+
 buildMenuLink :: String -> String -> Html
 buildMenuLink link activePage =
-  if link == activePage then
-    li ! class_ "active" $ a ! href (toValue $ "/" <> link) $ toHtml link
-  else
-    li $ a ! href (toValue $ "/" <> link) $ toHtml link
+  let liClass = if link == activePage
+                then "active"
+                else ""
+  in li ! class_ liClass $ a ! href (toValue $ "/" <> link) $ toHtml link
 
 
 navBar :: String -> Html
