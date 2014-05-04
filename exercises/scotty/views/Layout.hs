@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Views.Home (homeView) where
+module Views.Layout (layout, navBar) where
 
 import           Client.CSS                  (layoutCss)
 import           Data.Monoid                 (mempty)
@@ -17,14 +17,16 @@ import           Text.Blaze.Html5.Attributes (charset, class_, content, href,
                                               placeholder, rel, src, type_)
 import           Views.Utils                 (blaze, pet)
 import           Web.Scotty                  (ActionM)
-import           Views.Layout                (layout)
+import           Data.Char                   (toUpper)
 
-homeView :: ActionM ()
-homeView = blaze $ layout "home" $ do
-             div ! class_ "container" $ do
-               div ! class_ "jumbotron" $ do
-                 h1 "Home view"
-                 p "Welcome to the Scotty Starter template, equipped with Twitter Bootstrap 3.0 and HTML5 boilerplate"
-                 p $ do a ! class_ "btn btn-lg btn-primary" ! id "fb" ! href "#navbar" $ "Facebook"
-                        a ! class_ "btn btn-lg btn-danger" ! id "gmail" ! href "#navbar" $ "Gmail"
-
+navBar :: String -> Html
+navBar activePage = div ! class_ "navbar navbar-default navbar-static-top" $ div ! class_ "container" $ do
+           div ! class_ "navbar-header" $ do
+             button ! type_ "button"
+                    ! class_ "navbar-toggle" ! dataAttribute "toggle" "collapse" ! dataAttribute "target" ".navbar-collapse" $ do
+               a ! class_ "navbar-brand" ! href "#" $ "λ"
+           div ! class_ "navbar-collapse collapse" $ ul ! class_ "nav navbar-nav" $ do
+             li $ a ! href "/" $ "Home"
+             li $ a ! href "/about" $ "About"
+             li $ a ! href "/contact" $ "Contact"
+             li $ a ! href "/login" $ "Login"

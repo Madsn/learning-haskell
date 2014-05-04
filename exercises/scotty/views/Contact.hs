@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Views.Home (homeView) where
+module Views.Contact (contactView) where
 
 import           Client.CSS                  (layoutCss)
 import           Data.Monoid                 (mempty)
@@ -19,11 +19,11 @@ import           Views.Utils                 (blaze, pet)
 import           Web.Scotty                  (ActionM)
 import           Views.Layout                (layout)
 
-homeView :: ActionM ()
-homeView = blaze $ layout "home" $ do
+contactView :: ActionM ()
+contactView = blaze $ layout "home" $ do
              div ! class_ "container" $ do
                div ! class_ "jumbotron" $ do
-                 h1 "Home view"
+                 h1 "Contact view"
                  p "Welcome to the Scotty Starter template, equipped with Twitter Bootstrap 3.0 and HTML5 boilerplate"
                  p $ do a ! class_ "btn btn-lg btn-primary" ! id "fb" ! href "#navbar" $ "Facebook"
                         a ! class_ "btn btn-lg btn-danger" ! id "gmail" ! href "#navbar" $ "Gmail"
