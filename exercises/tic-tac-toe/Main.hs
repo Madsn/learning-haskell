@@ -1,17 +1,31 @@
 module Main where
 
-type Board = [Char]
+type Board = String
 
-getBoard :: Board
-getBoard =
-    "+---+---+---+\n" ++
-    "| 1 | 2 | 3 |\n" ++
-    "+---+---+---+\n" ++
-    "| 4 | 5 | 6 |\n" ++
-    "+---+---+---+\n" ++
-    "| 7 | 8 | 9 |\n" ++
-    "+---+---+---+\n"
+getRow :: Board -> Int -> String
+getRow b rowNum =
+    let r = rowNum * 3 in
+    "|  " ++
+    b!!r     : "  |  " ++
+    b!!(r+1) : "  |  " ++
+    b!!(r+2) : "  |\n"
+
+getBoard :: Board -> String
+getBoard board =
+    "+-----+-----+-----+\n" ++
+    "|     |     |     |\n" ++
+    getRow board 0 ++
+    "|     |     |     |\n" ++
+    "+-----+-----+-----+\n" ++
+    "|     |     |     |\n" ++
+    getRow board 1 ++
+    "|     |     |     |\n" ++
+    "+-----+-----+-----+\n" ++
+    "|     |     |     |\n" ++
+    getRow board 2 ++
+    "|     |     |     |\n" ++
+    "+-----+-----+-----+\n"
 
 main = do
     putStrLn "Tic Tac Toe\n"
-    putStrLn getBoard
+    putStrLn $ getBoard "123456789"
