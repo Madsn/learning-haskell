@@ -26,6 +26,14 @@ getBoard board =
     "|     |     |     |\n" ++
     "+-----+-----+-----+\n"
 
+numberRange :: [Char]
+numberRange = "123456789"
+
+validMoves :: Board -> String
+validMoves b = [ x | x <- numberRange, x `elem` b ]
+
 main = do
+    let board = numberRange
     putStrLn "Tic Tac Toe\n"
-    putStrLn $ getBoard "123456789"
+    putStrLn $ getBoard board
+    putStrLn $ "Valid moves: " ++ validMoves board
