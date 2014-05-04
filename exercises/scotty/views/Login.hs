@@ -20,7 +20,7 @@ import           Web.Scotty                  (ActionM)
 import           Views.Layout                (layout)
 
 loginView :: ActionM ()
-loginView = blaze $ layout "Login" $ do
+loginView = blaze $ layout "login" $ do
              div ! class_ "container" $ do
                div ! class_ "jumbotron" $ do
                  h1 "Login view"

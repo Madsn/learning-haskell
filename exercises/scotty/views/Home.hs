@@ -20,7 +20,7 @@ import           Web.Scotty                  (ActionM)
 import           Views.Layout                (layout)
 
 homeView :: ActionM ()
-homeView = blaze $ layout "Home" $ do
+homeView = blaze $ layout "home" $ do
              div ! class_ "container" $ do
                div ! class_ "jumbotron" $ do
                  h1 "Home view"

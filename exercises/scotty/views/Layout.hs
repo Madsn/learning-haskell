@@ -18,17 +18,16 @@ import           Text.Blaze.Html5.Attributes (charset, class_, content, href,
                                               placeholder, rel, src, type_)
 import           Views.Utils                 (blaze, pet)
 import           Web.Scotty                  (ActionM)
-import           Data.Char                   (toUpper)
 import           Data.Monoid
 
-layout :: Html -> Html -> Html
+layout :: String -> Html -> Html
 layout t b = docTypeHtml $ do
            pet "<!--[if lt IE 7]>      <html class='no-js lt-ie9 lt-ie8 lt-ie7'> <![endif]-->"
            pet "<!--[if IE 7]>         <html class='no-js lt-ie9 lt-ie8'/> <![endif]-->"
            pet "<!--[if IE 8]>         <html class='no-js lt-ie9'> <![endif]-->"
            pet "<!--[if gt IE 8]><!--> <html class='no-js'> <!--<![endif]-->"
            head $ do
-             title t
+             title $ toHtml t
              meta ! charset "utf-8"
              meta ! httpEquiv "X-UA-Compatible" ! content "IE=edge,chrome=1"
              meta ! name "description" ! content "Inspire Text"
@@ -41,21 +40,25 @@ layout t b = docTypeHtml $ do
              script ! src "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" $ mempty
 
 
-buildMenuLink :: String -> Html
-buildMenuLink link = a ! href (toValue $ "/" <> link) $ toHtml link
+buildMenuLink :: String -> String -> Html
+buildMenuLink link activePage =
+  if link == activePage then
+    li ! class_ "active" $ a ! href (toValue $ "/" <> link) $ toHtml link
+  else
+    li $ a ! href (toValue $ "/" <> link) $ toHtml link
 
 
-navBar :: Html -> Html
+navBar :: String -> Html
 navBar activePage = div ! class_ "navbar navbar-default navbar-static-top" $ div ! class_ "container" $ do
            div ! class_ "navbar-header" $ do
              button ! type_ "button"
                     ! class_ "navbar-toggle" ! dataAttribute "toggle" "collapse" ! dataAttribute "target" ".navbar-collapse" $ do
                a ! class_ "navbar-brand" ! href "#" $ "λ"
            div ! class_ "navbar-collapse collapse" $ ul ! class_ "nav navbar-nav" $ do
-             li $ buildMenuLink "Home"
-             li $ buildMenuLink "About"
-             li $ buildMenuLink "Contact"
-             li $ buildMenuLink "Login"
+             buildMenuLink "home" activePage
+             buildMenuLink "about" activePage
+             buildMenuLink "contact" activePage
+             buildMenuLink "login" activePage
 
 {-|
              li $ a ! href "/about" $ "About"

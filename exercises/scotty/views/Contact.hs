@@ -20,7 +20,7 @@ import           Web.Scotty                  (ActionM)
 import           Views.Layout                (layout)
 
 contactView :: ActionM ()
-contactView = blaze $ layout "Contact" $ do
+contactView = blaze $ layout "contact" $ do
              div ! class_ "container" $ do
                div ! class_ "jumbotron" $ do
                  h1 "Contact view"
