@@ -1,5 +1,10 @@
 module Main where
 
+import System.Exit (exitSuccess)
+import Data.List (intersperse)
+import Data.Sequence
+import Data.Foldable (toList)
+
 type Board = String
 
 getRow :: Board -> Int -> String
@@ -30,10 +35,18 @@ numberRange :: [Char]
 numberRange = "123456789"
 
 validMoves :: Board -> String
-validMoves b = [ x | x <- numberRange, x `elem` b ]
+validMoves b = intersperse ',' [ x | x <- numberRange, x `elem` b ]
 
+playerTurn :: Board -> IO ()
+playerTurn b = do
+    putStrLn $ "Choose one of the available fields: " ++ validMoves b++ "\n"
+    move <- getLine
+    putStrLn $ getBoard $ toList $ update (subtract 1 $ read move :: Int) 'O' $ fromList b
+
+main :: IO ()
 main = do
     let board = numberRange
-    putStrLn "Tic Tac Toe\n"
+    putStrLn "Welcome to Tic Tac Toe\n"
     putStrLn $ getBoard board
-    putStrLn $ "Valid moves: " ++ validMoves board
+    putStrLn "You are O"
+    playerTurn board
