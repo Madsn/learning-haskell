@@ -91,7 +91,6 @@ computerTurn b = do
         let move = firstAvailable b
         putStrLn $ "Computer chooses: " ++ show move
         let newBoard = updateBoard move 'X' b
-        printBoard newBoard
         playerTurn newBoard
     else do
         printGameOver winningPlayer
