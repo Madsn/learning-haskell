@@ -1,7 +1,7 @@
 module Main where
 
 import System.Exit (exitSuccess)
-import Data.List (intersperse)
+import Data.List (intersperse, isInfixOf)
 import Data.Sequence (fromList, update)
 import Data.Foldable (toList)
 import Control.Monad
@@ -41,7 +41,7 @@ numberRange :: String
 numberRange = "123456789"
 
 validMoves :: Board -> String
-validMoves b = intersperse ',' [ x | x <- numberRange, x `elem` b ]
+validMoves b = [ x | x <- numberRange, x `elem` b ]
 
 winningCombinations :: [[Int]]
 winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[1,4,7],[2,4,6],[0,3,6],[2,5,8]]
@@ -71,6 +71,18 @@ printGameOver p = putStrLn $ p ++ " Wins!\n ---- Game over ----"
 gameTied :: Board -> Bool
 gameTied b = not $ any (liftM2 (&&) (/='X') (/='O')) b
 
+isValidMove :: String -> Board -> Bool
+isValidMove m b = m `isInfixOf` validMoves b
+
+getPlayerMove :: Board -> Int
+getPlayerMove b = do
+    putStrLn $ "Choose one of the available fields: " ++ intersperse ',' $ validMoves b
+    move <- getLine
+    if isValidMove move b then
+        subtract 1 $ read move
+    else
+        getPlayerMove b
+
 playerTurn :: Board -> IO ()
 playerTurn b = do
     if gameTied b then do
@@ -80,9 +92,8 @@ playerTurn b = do
     else do
         let winningPlayer = gameOverCheck b
         if null winningPlayer then do
-            putStrLn $ "Choose one of the available fields: " ++ validMoves b
-            move <- getLine
-            let newBoard = updateBoard (subtract 1 $ read move :: Int) 'O' b
+            let move = getPlayerMove b
+            let newBoard = updateBoard move 'O' b
             computerTurn newBoard
         else do
             printGameOver winningPlayer
