@@ -46,28 +46,54 @@ validMoves b = intersperse ',' [ x | x <- numberRange, x `elem` b ]
 firstAvailable :: Board -> Int
 firstAvailable b = subtract 1 . digitToInt $ head $ filter (liftM2 (&&) (/='O') (/='X')) b
 
+winningCombinations :: [[Int]]
+winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[1,4,7],[2,4,6],[0,3,6],[2,5,8]]
+
+foo b c t = c == b !! t
+
+allEquals :: Board -> Char -> [Int] -> Bool
+allEquals b c t = and $ map (foo b c) t
+
+hasWon :: Char -> Board -> Bool
+hasWon c b = or $ map (allEquals b c) winningCombinations
+
+
+gameOverCheck :: Board -> [Char]
+gameOverCheck b =
+    if hasWon 'O' b then
+        "O"
+    else
+        if hasWon 'X' b then
+            "X"
+        else
+            []
+
+printGameOver p = putStrLn $ p ++ " Wins!\n ---- Game over ----"
+
 playerTurn :: Board -> IO ()
-playerTurn b =
-    if null $ validMoves b then do
-        putStrLn "Game over"
-    else do
+playerTurn b = do
+    let winningPlayer = gameOverCheck b
+    if null winningPlayer then do
         putStrLn $ "Choose one of the available fields: " ++ validMoves b
         move <- getLine
         let newBoard = updateBoard (subtract 1 $ read move :: Int) 'O' b
         printBoard newBoard
         computerTurn newBoard
+    else do
+        printGameOver winningPlayer
 
 computerTurn :: Board -> IO ()
-computerTurn b =
-    if null $ validMoves b then do
-        putStrLn "Game over"
-    else do
+computerTurn b = do
+    let winningPlayer = gameOverCheck b
+    if null winningPlayer then do
         putStrLn "Computers turn"
         let move = firstAvailable b
         putStrLn $ "Computer chooses: " ++ show move
         let newBoard = updateBoard move 'X' b
         printBoard newBoard
         playerTurn newBoard
+    else do
+        printGameOver winningPlayer
 
 updateBoard :: Int -> Char -> Board -> Board
 updateBoard i c b = toList $ update i c $ fromList b
