@@ -81,6 +81,7 @@ playerTurn b = do
         computerTurn newBoard
     else do
         printGameOver winningPlayer
+        newGame
 
 computerTurn :: Board -> IO ()
 computerTurn b = do
@@ -94,6 +95,7 @@ computerTurn b = do
         playerTurn newBoard
     else do
         printGameOver winningPlayer
+        newGame
 
 updateBoard :: Int -> Char -> Board -> Board
 updateBoard i c b = toList $ update i c $ fromList b
@@ -105,3 +107,17 @@ main = do
     printBoard board
     putStrLn "You are O"
     playerTurn board
+
+newGame :: IO ()
+newGame = do
+    putStrLn "Play again? y/n"
+    choice <- getLine
+    if choice == "y" then
+        main
+    else if choice == "n" then do
+        putStrLn "Goodbye!"
+        exitSuccess
+    else do
+        putStrLn "Choice not recognized."
+        newGame
+
