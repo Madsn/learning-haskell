@@ -8,6 +8,7 @@ import Data.Char (digitToInt)
 import Safe
 import Data.Set as Set
 import Data.List (intersperse)
+import Data.Maybe (fromJust)
 
 data Square = SQ0 | SQ1 | SQ2 | SQ3 | SQ4 | SQ5 | SQ6 | SQ7 | SQ8 deriving (Eq,Ord,Read,Show)
 
@@ -25,16 +26,16 @@ showValidMoves gs = unwords $ Set.toList $ Set.map squareToNumber $ validMoves g
 squareToNumber :: Square -> String
 squareToNumber s = [last $ show s]
 
-numberToSquare :: Char -> Maybe Square
-numberToSquare '0' = Just SQ0
-numberToSquare '1' = Just SQ1
-numberToSquare '2' = Just SQ2
-numberToSquare '3' = Just SQ3
-numberToSquare '4' = Just SQ4
-numberToSquare '5' = Just SQ5
-numberToSquare '6' = Just SQ6
-numberToSquare '7' = Just SQ7
-numberToSquare '8' = Just SQ8
+numberToSquare :: String -> Maybe Square
+numberToSquare "0" = Just SQ0
+numberToSquare "1" = Just SQ1
+numberToSquare "2" = Just SQ2
+numberToSquare "3" = Just SQ3
+numberToSquare "4" = Just SQ4
+numberToSquare "5" = Just SQ5
+numberToSquare "6" = Just SQ6
+numberToSquare "7" = Just SQ7
+numberToSquare "8" = Just SQ8
 numberToSquare _ = Nothing
 
 getCell :: Square -> GameState -> String
@@ -60,15 +61,36 @@ getBoard gs =
     "|     |     |     |\n" ++
     "+-----+-----+-----+\n"
 
+updateGameState :: GameState -> Square -> Char -> GameState
+updateGameState gs s 'O' = (Set.insert s $ fst gs, snd gs)
+updateGameState gs s _ = (fst gs, Set.insert s $ snd gs)
+
+handlePlayerMove :: GameState -> Maybe Square -> IO ()
+handlePlayerMove gs (Just s) = do
+    let newGs = updateGameState gs s 'O'
+    computerTurn newGs
+handlePlayerMove gs Nothing = do
+    putStrLn "Invalid input, try again."
+    playerTurn gs
+
 playerTurn :: GameState -> IO ()
 playerTurn gs = do
+    putStrLn $ getBoard gs
     putStrLn $ "Choose a cell, enter one of the following: " ++ show (showValidMoves gs)
+    input <- getLine
+    let move = numberToSquare input -- Maybe Square
+    handlePlayerMove gs move
 
+firstAvailable :: GameState -> Square
+firstAvailable gs = Set.findMin $ validMoves gs
+
+computerTurn :: GameState -> IO ()
+computerTurn gs = do
+    playerTurn $ updateGameState gs (firstAvailable gs) 'X'
 
 main :: IO ()
 main = do
     let gs = (Set.empty, Set.empty)
     putStrLn "Welcome to Tic Tac Toe\n"
-    putStrLn $ getBoard gs
     putStrLn "You are O"
     playerTurn gs
