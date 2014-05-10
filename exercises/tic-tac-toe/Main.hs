@@ -90,7 +90,19 @@ computerTurn gs = do
 
 main :: IO ()
 main = do
-    let gs = (Set.empty, Set.empty)
-    putStrLn "Welcome to Tic Tac Toe\n"
+    putStrLn "Welcome to Tic Tac Toe"
     putStrLn "You are O"
-    playerTurn gs
+    startGame
+
+startGame :: IO ()
+startGame = do
+    let gs = (Set.empty, Set.empty)
+    putStrLn "Do you wish to start? (y/n)"
+    playerStarts <- getLine
+    if playerStarts == "y" then
+        playerTurn gs
+    else if playerStarts == "n" then
+        computerTurn gs
+    else do
+        putStrLn "Invalid input"
+        startGame
