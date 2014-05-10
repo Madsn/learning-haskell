@@ -1,0 +1,20 @@
+Default: &defaults
+  database: yesod-madsn.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: yesod-madsn_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: yesod-madsn_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: yesod-madsn_production.sqlite3
+  poolsize: 100
+  <<: *defaults
