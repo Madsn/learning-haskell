@@ -74,12 +74,12 @@ gameTied b = not $ any (liftM2 (&&) (/='X') (/='O')) b
 isValidMove :: String -> Board -> Bool
 isValidMove m b = m `isInfixOf` validMoves b
 
-getPlayerMove :: Board -> Int
+getPlayerMove :: Board -> IO Int
 getPlayerMove b = do
-    putStrLn $ "Choose one of the available fields: " ++ intersperse ',' $ validMoves b
+    putStrLn $ "Choose one of the available fields: " ++ (intersperse ',' $ validMoves b)
     move <- getLine
     if isValidMove move b then
-        subtract 1 $ read move
+        return $ subtract 1 $ read move
     else
         getPlayerMove b
 
@@ -92,7 +92,7 @@ playerTurn b = do
     else do
         let winningPlayer = gameOverCheck b
         if null winningPlayer then do
-            let move = getPlayerMove b
+            move <- getPlayerMove b
             let newBoard = updateBoard move 'O' b
             computerTurn newBoard
         else do
