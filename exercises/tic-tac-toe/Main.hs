@@ -26,17 +26,25 @@ showValidMoves gs = unwords $ Set.toList $ Set.map squareToNumber $ validMoves g
 squareToNumber :: Square -> String
 squareToNumber s = [last $ show s]
 
-numberToSquare :: String -> Maybe Square
-numberToSquare "0" = Just SQ0
-numberToSquare "1" = Just SQ1
-numberToSquare "2" = Just SQ2
-numberToSquare "3" = Just SQ3
-numberToSquare "4" = Just SQ4
-numberToSquare "5" = Just SQ5
-numberToSquare "6" = Just SQ6
-numberToSquare "7" = Just SQ7
-numberToSquare "8" = Just SQ8
-numberToSquare _ = Nothing
+squareFromString :: String -> Maybe Square
+squareFromString "0" = Just SQ0
+squareFromString "1" = Just SQ1
+squareFromString "2" = Just SQ2
+squareFromString "3" = Just SQ3
+squareFromString "4" = Just SQ4
+squareFromString "5" = Just SQ5
+squareFromString "6" = Just SQ6
+squareFromString "7" = Just SQ7
+squareFromString "8" = Just SQ8
+squareFromString _ = Nothing
+
+checkIfValidMove :: GameState -> Square -> Maybe Square
+checkIfValidMove gs s
+    | Set.member s $ validMoves gs = Just s
+    | otherwise = Nothing
+
+readPlayerMove :: GameState -> String -> Maybe Square
+readPlayerMove gs inp = squareFromString inp >>= checkIfValidMove gs
 
 getCell :: Square -> GameState -> String
 getCell s gs
@@ -67,6 +75,7 @@ updateGameState gs s _ = (fst gs, Set.insert s $ snd gs)
 
 handlePlayerMove :: GameState -> Maybe Square -> IO ()
 handlePlayerMove gs (Just s) = do
+    putStrLn $ "Square: " ++ show s
     let newGs = updateGameState gs s 'O'
     computerTurn newGs
 handlePlayerMove gs Nothing = do
@@ -78,7 +87,7 @@ playerTurn gs = do
     putStrLn $ getBoard gs
     putStrLn $ "Choose a cell, enter one of the following: " ++ show (showValidMoves gs)
     input <- getLine
-    let move = numberToSquare input -- Maybe Square
+    let move = readPlayerMove gs input -- Maybe Square
     handlePlayerMove gs move
 
 firstAvailable :: GameState -> Square
