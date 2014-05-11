@@ -66,7 +66,6 @@ getCell s gs
     | Set.member s $ snd gs = "X"
     | otherwise = squareToString s
 
-
 getBoard :: GameState -> String
 getBoard gs =
     "+-----+-----+-----+\n" ++
@@ -113,40 +112,27 @@ computerTurn gs = do
     playerTurn $ updateGameState gs (firstAvailable gs) 'X'
 
 gameTied :: GameState -> Bool
-gameTied gs
-    | Set.null $ validMoves gs = True
-    | otherwise = False
+gameTied gs = Set.null $ validMoves gs
 
-playerWins :: GameState -> Bool
-playerWins gs
-    | Set.null (fst gs) = False
-    | or $ Prelude.map (Set.isSubsetOf (fst gs)) winningCombinations = True
-
-playerLoses :: GameState -> Bool
-playerLoses gs
-    | Set.null (snd gs) = False
-    | or $ Prelude.map (Set.isSubsetOf (snd gs)) winningCombinations = True
+playerWins :: GameState -> ((Set Square, Set Square) -> Set Square) -> Bool
+playerWins gs fnc = or $ Prelude.map (flip Set.isSubsetOf $ (fnc gs)) winningCombinations
 
 checkIfGameOver :: GameState -> IO ()
 checkIfGameOver gs =
-    if playerWins gs then do
+    if playerWins gs fst then do
+        putStrLn $ getBoard gs
         putStrLn "Player wins!"
-        putStrLn $ show $ fst gs
         startGame
-    else if playerLoses gs then do
+    else if playerWins gs snd then do
+        putStrLn $ getBoard gs
         putStrLn "Player loses!"
         startGame
     else if gameTied gs then do
+        putStrLn $ getBoard gs
         putStrLn "Game tied!"
         startGame
     else
         putStrLn ""
-
-main :: IO ()
-main = do
-    putStrLn "Welcome to Tic Tac Toe"
-    putStrLn "You are O"
-    startGame
 
 startGame :: IO ()
 startGame = do
@@ -173,4 +159,8 @@ newGame = do
         putStrLn "Invalid input."
         startGame
 
-
+main :: IO ()
+main = do
+    putStrLn "Welcome to Tic Tac Toe"
+    putStrLn "You are O"
+    startGame
