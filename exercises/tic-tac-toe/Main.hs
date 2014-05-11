@@ -101,6 +101,8 @@ playerTurn gs = do
     let move = readPlayerMove gs input -- Maybe Square
     handlePlayerMove gs move
 
+-- Naive computer AI
+-- TODO: implement improved AI
 firstAvailable :: GameState -> Square
 firstAvailable gs = Set.findMin $ validMoves gs
 
@@ -116,21 +118,20 @@ playerWins :: GameState -> ((Set Square, Set Square) -> Set Square) -> Bool
 playerWins gs fnc = or $ Prelude.map (flip Set.isSubsetOf $ (fnc gs)) winningCombinations
 
 checkIfGameOver :: GameState -> IO ()
-checkIfGameOver gs =
-    if playerWins gs fst then do
+checkIfGameOver gs
+    | playerWins gs fst = do
         putStrLn $ getBoard gs
         putStrLn "Player wins!"
         startGame
-    else if playerWins gs snd then do
+    | playerWins gs snd = do
         putStrLn $ getBoard gs
         putStrLn "Player loses!"
         startGame
-    else if gameTied gs then do
+    | gameTied gs = do
         putStrLn $ getBoard gs
         putStrLn "Game tied!"
         startGame
-    else
-        putStrLn ""
+    | otherwise = putStrLn ""
 
 startGame :: IO ()
 startGame = do
