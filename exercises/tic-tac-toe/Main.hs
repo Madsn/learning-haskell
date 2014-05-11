@@ -4,11 +4,9 @@ Second attempt
 module Main where
 
 import System.Exit (exitSuccess)
-import Data.Char (digitToInt)
 import Safe
 import Data.Set as Set
 import Data.List (intersperse)
-import Data.Maybe (fromJust)
 
 data Square = SQ0 | SQ1 | SQ2 | SQ3 | SQ4 | SQ5 | SQ6 | SQ7 | SQ8 deriving (Eq,Ord,Read,Show)
 
