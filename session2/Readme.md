@@ -19,7 +19,7 @@ import Control.Lens
 Prefix with "Mk"
 
 
-- [ ] Implement clamp in haskell (limit output to a range of numbers)
-- [ ] Scotty starter pack
-- [ ] Snake game
+- [X] Implement clamp in haskell (limit output to a range of numbers)
+- [X] Scotty starter pack
+- [X] Tic tac toe
 - [ ] HWO
