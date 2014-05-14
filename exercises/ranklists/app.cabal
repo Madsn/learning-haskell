@@ -1,0 +1,25 @@
+name:           app
+version:        0.1
+cabal-version:  >=1.10
+build-type:     Simple
+author:         me
+
+executable app
+  build-depends:   
+                   base >= 4,
+                   scotty >= 0.6,
+                   transformers,
+                   blaze-html,
+                   aeson < 0.7,
+                   persistent,
+                   persistent-sqlite,
+                   persistent-template,
+                   http-types,
+                   text,
+                   time,
+                   wai-extra,
+                   wai-middleware-static
+  hs-source-dirs:  src
+  ghc-options:     -Wall -rtsopts
+  main-is:         Main.hs
+  other-modules:   Models
