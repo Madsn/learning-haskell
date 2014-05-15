@@ -3,3 +3,5 @@
 exercises/scotty/dist/
 .cabal-sandbox/
 exercises/snap/dist/
+exercises/ranklists/dist/
+exercises/ranklists/*.db
