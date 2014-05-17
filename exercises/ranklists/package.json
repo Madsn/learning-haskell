@@ -27,6 +27,7 @@
     "grunt-svgmin": "~0.3.0",
     "grunt-sync": "~0.0.5",
     "grunt-usemin": "~2.0.2",
+    "grunt-exec": "~1.4.3",
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "0.2.3",
     "karma" : "~0.10.8",

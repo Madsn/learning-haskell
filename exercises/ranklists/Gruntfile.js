@@ -4,13 +4,19 @@ var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
-  require('time-grunt')(grunt); 
+  require('time-grunt')(grunt);
+  grunt.loadNpmTasks('grunt-exec');
 
   grunt.initConfig({
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'public',
       dist: 'public'
+    },
+    exec: {
+      build: {
+        cmd: "cabal build"
+      }
     },
     sync: {
       dist: {
@@ -108,6 +114,7 @@ module.exports = function (grunt) {
   grunt.registerTask('server', function (target) {
     grunt.task.run([
       //'copy:dist',
+      'exec:build',
       'configureProxies',
       'connect:livereload',
       'watch'
