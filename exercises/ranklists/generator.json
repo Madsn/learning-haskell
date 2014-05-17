@@ -1,5 +1,20 @@
 {
 	"baseName": "ranklists",
-	"entities": [],
+	"entities": [
+		{
+			"name": "Team",
+			"attrs": [
+				{
+					"attrName": "name",
+					"attrType": "String",
+					"attrImplType": "String",
+					"minLength": "1",
+					"maxLength": "100",
+					"enumValues": [],
+					"required": true
+				}
+			]
+		}
+	],
 	"resources": []
 }

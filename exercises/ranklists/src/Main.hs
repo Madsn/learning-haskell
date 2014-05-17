@@ -33,6 +33,47 @@ main = do
         redirect "index.html"
       
       
+      get "/ranklists/Teams" $ do
+        (Teams :: [Db.Entity Team]) <-
+          liftIO $ flip Db.runSqlPersistMPool pool $ Db.selectList [] []
+        json Teams
+
+      get "/ranklists/Teams/:id" $ do
+        (id :: Integer) <- param "id"
+        let key :: Db.Key Team = Db.Key (Db.PersistInt64 $ fromIntegral id)
+        (Team :: Maybe Team) <-
+          liftIO $ flip Db.runSqlPersistMPool pool $ Db.get $ key
+        case Team of
+          Just e  -> do setHeader "Access-Control-Allow-Origin" "*"
+                        json $ Db.Entity key e 
+          Nothing -> status notFound404
+
+      post "/ranklists/Teams" $ do
+        e :: Team <- jsonData
+        id <- liftIO $ flip Db.runSqlPersistMPool pool $ Db.insert e
+        json $ Db.Entity id e
+
+      put "/ranklists/Teams/:id" $ do
+        (id :: Integer) <- param "id"
+        let key :: Db.Key Team = Db.Key (Db.PersistInt64 $ fromIntegral id)
+        e :: Team <- jsonData
+        (Team :: Maybe Team) <-
+          liftIO $ flip Db.runSqlPersistMPool pool $ Db.get $ key
+        case Team of
+          Just _  -> do liftIO $ flip Db.runSqlPersistMPool pool $ Db.replace key $ e
+                        json $ Db.Entity key e
+          Nothing -> status notFound404
+
+      delete "/ranklists/Teams/:id" $ do
+        (id :: Integer) <- param "id"
+        let key :: Db.Key Team = Db.Key (Db.PersistInt64 $ fromIntegral id)
+        (Team :: Maybe Team) <-
+          liftIO $ flip Db.runSqlPersistMPool pool $ Db.get $ key
+        case Team of
+          Just _  -> do liftIO $ flip Db.runSqlPersistMPool pool $ Db.delete $ key
+                        status noContent204
+          Nothing -> status notFound404
+      
 
       notFound $ do
         status notFound404
