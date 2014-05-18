@@ -2,7 +2,7 @@
 
     <h2>Teams</h2>
 
-    <script type = "text/ng-template" id="Team-save.html">
+    <script type = "text/ng-template" id="team-save.html">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form name="form" role="form" novalidate
@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label>ID</label>
                             <input type="text" class="form-control" name="id"
-                                   ng-model="Team.id" readonly>
+                                   ng-model="team.id" readonly>
                         </div>
 
                         
@@ -26,7 +26,7 @@
                             <label>name:</label>
                             
                             <input type="text" class="form-control" name="name"
-                                   ng-model="Team.name" ng-required="true"
+                                   ng-model="team.name" ng-required="true"
                                    ng-minlength=1 ng-maxlength=100/>
                             <span class="error" ng-show="form.name.$error.minlength">Must be at least 1 characters.</span>
                             <span class="error" ng-show="form.name.$error.maxlength">Must be at most 100 characters.</span>
@@ -59,19 +59,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="Team in Teams">
-                <td>{{Team.id}}</td>
+            <tr ng-repeat="team in teams">
+                <td>{{team.id}}</td>
                 
-                <td>{{Team.name }}</td>
+                <td>{{team.name }}</td>
                 
                 <td>
                     <button type="submit"
-                            ng-click="update(Team.id)"
+                            ng-click="update(team.id)"
                             class="btn">
                         <span class="glyphicon glyphicon-pencil"></span> Edit
                     </button>
                     <button type="submit"
-                            ng-click="delete(Team.id)"
+                            ng-click="delete(team.id)"
                             class="btn btn-danger">
                         <span class="glyphicon glyphicon-remove-circle"></span> Delete
                     </button>

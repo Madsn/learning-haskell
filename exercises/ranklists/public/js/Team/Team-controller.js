@@ -4,7 +4,7 @@ angular.module('ranklists')
   .controller('TeamController', ['$scope', '$modal', 'resolvedTeam', 'Team',
     function ($scope, $modal, resolvedTeam, Team) {
 
-      $scope.Teams = resolvedTeam;
+      $scope.teams = resolvedTeam;
 
       $scope.create = function () {
         $scope.clear();
@@ -12,7 +12,7 @@ angular.module('ranklists')
       };
 
       $scope.update = function (id) {
-        $scope.Team = Team.get({id: id}, function (obj) {
+        $scope.team = Team.get({id: id}, function (obj) {
           // deal with Haskell Persistent json format
           obj.id = obj.key;
           delete obj.key;
@@ -27,34 +27,34 @@ angular.module('ranklists')
       $scope.delete = function (id) {
         Team.delete({id: id},
           function () {
-            $scope.Teams = Team.query(transformObjs);
+            $scope.teams = Team.query(transformObjs);
           });
       };
 
       $scope.save = function (id) {
         if (id) {
           var obj = {};
-          for (var prop in $scope.Team) {
+          for (var prop in $scope.team) {
             // remove id for Haskell Persistent json format
-            if (prop !== "id") obj[prop] = $scope.Team[prop];
+            if (prop !== "id") obj[prop] = $scope.team[prop];
           }
-          //Team.update({id: id}, $scope.Team,
+          //Team.update({id: id}, $scope.team,
           Team.update({id: id}, obj,
             function () {
-              $scope.Teams = Team.query(transformObjs);
+              $scope.teams = Team.query(transformObjs);
               $scope.clear();
             });
         } else {
-          Team.save($scope.Team,
+          Team.save($scope.team,
             function () {
-              $scope.Teams = Team.query(transformObjs);
+              $scope.teams = Team.query(transformObjs);
               $scope.clear();
             });
         }
       };
 
       $scope.clear = function () {
-        $scope.Team = {
+        $scope.team = {
           
           "name": "",
           
@@ -63,18 +63,18 @@ angular.module('ranklists')
       };
 
       $scope.open = function (id) {
-        var TeamSave = $modal.open({
-          templateUrl: 'Team-save.html',
+        var teamSave = $modal.open({
+          templateUrl: 'team-save.html',
           controller: TeamSaveController,
           resolve: {
-            Team: function () {
-              return $scope.Team;
+            team: function () {
+              return $scope.team;
             }
           }
         });
 
-        TeamSave.result.then(function (entity) {
-          $scope.Team = entity;
+        teamSave.result.then(function (entity) {
+          $scope.team = entity;
           $scope.save(id);
         });
       };
@@ -96,13 +96,13 @@ angular.module('ranklists')
     }]);
 
 var TeamSaveController =
-  function ($scope, $modalInstance, Team) {
-    $scope.Team = Team;
+  function ($scope, $modalInstance, team) {
+    $scope.team = team;
 
     
 
     $scope.ok = function () {
-      $modalInstance.close($scope.Team);
+      $modalInstance.close($scope.team);
     };
 
     $scope.cancel = function () {

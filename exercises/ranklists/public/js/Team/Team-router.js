@@ -3,8 +3,8 @@
 angular.module('ranklists')
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-      .when('/Teams', {
-        templateUrl: 'views/Team/Teams.html',
+      .when('/teams', {
+        templateUrl: 'views/team/teams.html',
         controller: 'TeamController',
         resolve:{
           resolvedTeam: ['Team', function (Team) {

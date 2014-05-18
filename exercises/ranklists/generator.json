@@ -2,7 +2,7 @@
 	"baseName": "ranklists",
 	"entities": [
 		{
-			"name": "Team",
+			"name": "team",
 			"attrs": [
 				{
 					"attrName": "name",
