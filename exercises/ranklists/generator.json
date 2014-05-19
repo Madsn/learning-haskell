@@ -12,6 +12,15 @@
 					"maxLength": "100",
 					"enumValues": [],
 					"required": true
+				},
+				{
+					"attrName": "score",
+					"attrType": "Integer",
+					"attrImplType": "Int",
+					"min": "",
+					"max": "",
+					"enumValues": [],
+					"required": false
 				}
 			]
 		}

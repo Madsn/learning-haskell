@@ -58,6 +58,8 @@ angular.module('ranklists')
           
           "name": "",
           
+          "score": "",
+          
           "id": ""
         };
       };

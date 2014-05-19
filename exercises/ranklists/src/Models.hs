@@ -13,5 +13,6 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 Team json
     
     name String Maybe
+    score Int 
     deriving Show
 |]
