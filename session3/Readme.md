@@ -23,9 +23,10 @@ No two pigs live in the same type of house.
 No two pigs handed out the same type of treat.
 Using the clues below, write a program that determines which pig lives
 in which type of house, and what type of treat each pig handed out.
----
+```
 Petey Pig did not hand out the popcorn.
 Pippin Pig does not live in the wood house.
 The pig that lives in the straw house handed out popcorn.
 Petunia Pig handed out apples.
 The pig who handed out chocolate does not live in the brick house.
+```
