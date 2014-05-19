@@ -1,5 +1,3 @@
-module Clamptest where
-
 import Data.List (sort)
 import Test.QuickCheck
 
@@ -13,7 +11,7 @@ clampB minBound maxBound x
     | x < minBound = minBound
     | otherwise = x
 
-main = quickCheck (\i -> \j -> \k -> i < j ==> clampA i j k == clampB i j k)
+main = quickCheck (\i j k -> i < j ==> clampA i j k == clampB i j k)
 
 --main = quickCheck (\i -> \j -> \k -> clampA i j k == clampB i j k)
   -- conclusion: they are not in fact equivalent, when given conflicting min/max bound values (precedence differs)
