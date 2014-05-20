@@ -1,3 +1,18 @@
 <div>
-  This is the scoreboard page
+  <table class="table table-striped">
+    <thead>
+      <th>
+        Name
+      </th>
+      <th>
+        Score
+      </th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="team in teams | orderBy:'score':true">
+        <td>{{team.name}}</td>
+        <td>{{team.score}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
