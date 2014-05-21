@@ -26,19 +26,22 @@ angular.module('ranklists')
       };
 
       $scope.resetScore = function(id){
-        setScore(id, 0);
+        var team = $filter('getById')($scope.teams, id)
+        team.score = score;
+        updateTeam(team);
       };
 
       var changeScore = function(id, val){
         var team = $filter('getById')($scope.teams, id)
         team.score = team.score + val;
-        Team.update({id: id}, team);
+        updateTeam(team);
       };
 
-      var setScore = function(id, score){
-        var team = $filter('getById')($scope.teams, id)
-        team.score = score;
-        Team.update({id: id}, team);
+      var updateTeam = function(team){
+        if (team.score < 0){
+          team.score = 0;
+        }
+        Team.update({id: team.id}, team);
       };
 
       var transformObjs = function (objs) {
