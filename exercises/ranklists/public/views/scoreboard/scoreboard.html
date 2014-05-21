@@ -7,11 +7,17 @@
       <th>
         Score
       </th>
+      <th></th>
+      <th></th>
+      <th></th>
     </thead>
     <tbody>
       <tr ng-repeat="team in teams | orderBy:'score':true">
         <td>{{team.name}}</td>
         <td>{{team.score}}</td>
+        <td ng-click="incrementScore(team.id)"><span class="glyphicon glyphicon-plus"></span></td>
+        <td ng-click="decrementScore(team.id)"><span class="glyphicon glyphicon-minus"></span></td>
+        <td ng-click="resetScore(team.id)"><span class="glyphicon glyphicon-remove"></span></td>
       </tr>
     </tbody>
   </table>
